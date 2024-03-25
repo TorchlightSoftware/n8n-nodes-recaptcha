@@ -1,8 +1,10 @@
 # n8n ReCaptcha
 
+A ReCaptcha backend that you can forward to any URL.
+
 ## Audience
 
-This is primarily for Weblflow developers and other front end developers who are looking for a captcha solution and don't want to set up their own server.  Technically there's still a server running here, but it's in a no-code automation environment (n8n).
+This is primarily for Webflow developers and other front end developers who are looking for a captcha solution and don't want to set up their own server.  Technically there's still a server running here, but it's in a no-code automation environment (n8n).
 
 ## Purpose
 
@@ -23,9 +25,7 @@ I like n8n because:
 3) Your workflows are data that you own.
 4) The whole system is open source.
 
-From an intellectual property standpoint I feel I'm in a much stronger position with n8n, knowing that at any time I could transition to a private cloud.  To me this gives me the benefits of no-code, e.g. being able to let the company evolve without being bottlenecked by software devs, without the lockin that most no-code solutions come with.
-
-So I think this is good for people who:
+I think this is good for people who:
 
 1) May not have developers now, but may see that coming in the future
 2) Have a web developer who doesn't do server code
@@ -34,11 +34,11 @@ So I think this is good for people who:
 5) May be concerned about deplatforming
 6) Want to let the company grow organically with no-code solutions that later become augmented and interoperable with custom code
 
-You might not want to use it if you never see yourself having development in house, and you want something that's going to remain completely in the no-code space.
+Your requirements may vary.
 
 ### What if I don't want to or can't use n8n?
 
-You could use Heroku or Netlify or a serverless function.  But these solutions are going to be a little bit more technical than using n8n would be.  Unfortunately if you're on Zapier or Make, those platforms don't allow this kind of flexibility to build a custom server as I have done here and publish it as a Node that others can use.
+Something similar to what I've built here could be built using Heroku or Netlify or a serverless function.  But these solutions are going to be a little bit more technical than using n8n would be.  Unfortunately if you're on Zapier or Make, those platforms don't allow this kind of flexibility to build a custom server as I have done here and publish it as a Node that others can use.
 
 If enough people want an alternative, let me know what you would prefer: Heroku, Netlify, or a serverless function.  And I'll repackage what I have here so that you can use it in that way.
 
@@ -46,11 +46,12 @@ If enough people want an alternative, let me know what you would prefer: Heroku,
 
 1. Set up an n8n account.
 2. Create a new worfklow.
-3. Add an n8n-recaptcha node.
-4. Configure it with your API key and any custom options you want.
+3. Add a webhook.
+4. Add an n8n-recaptcha node. Configure it with your secret key.
 5. Add an HTTP node.  Call the endpoint you want to protect, and pass it the data from the n8n-recaptcha node.
 6. Add the n8n-recaptcha javascript to your website.
-7. Add attributes to your form to configure your site-key and your n8n Node.
+7. Add attributes to your form to configure your site-key.
+8. Send the form data to your n8n webhook.
 
 ## Running the Test Form
 
