@@ -57,7 +57,7 @@ Before you run the tests:
 cp setJestEnvVars-example.js setJestEnvVars.js
 ```
 
-And change the file to include your Google ReCaptcha secret and token.  You can [get your site and secret key by registering at Google ReCaptcha](https://www.google.com/recaptcha/admin).  You can get a token by using the test site here.
+And change the file to include your Google ReCaptcha secret and token.  You can [get your site and secret key by registering at Google ReCaptcha](https://www.google.com/recaptcha/admin).  You can get a token by using the [test site here](https://captcha-demo.tlsft.com/).
 
 ## Building Your Own n8n Nodes
 
