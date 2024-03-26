@@ -44,25 +44,26 @@ If enough people want an alternative, let me know what you would prefer: Heroku,
 
 ## How to use it
 
-1. Set up an n8n account.
-2. Create a new worfklow.
-3. Add a webhook.
-4. Add an n8n-recaptcha node. Configure it with your secret key.
-5. Add an HTTP node.  Call the endpoint you want to protect, and pass it the data from the n8n-recaptcha node.
-6. Add the n8n-recaptcha javascript to your website.
-7. Add attributes to your form to configure your site-key.
-8. Send the form data to your n8n webhook.
+1. [Register a Google Recaptcha site](https://www.google.com/recaptcha/admin).  Note your Secret (step 4) and Sitekey (step 8).
+2. [Set up an n8n account](https://app.n8n.cloud/login).
+3. Create a new worfklow.
+4. Add a webhook.  Note the URL for step 8.
+5. Add a Recaptcha Node. Configure it with your secret key.
+6. Add an HTTP node.  Call the endpoint you want to protect, and pass it the data from the Recaptcha Node.
+7. Add the [Google Recaptcha Javascript to your website](https://developers.google.com/recaptcha/docs/v3).
+8. Add attributes to your form to configure your site-key.
+9. Send the form data to your n8n webhook.
 
 ## Running the Test Form
 
 If you want to test your n8n setup with a form that's known to work, I've provided a test form for that.
 
-You can access a hosted version of the test form here.  That's running an unmodified version of the code here.  If you want to build it from scratch please use the following instructions.
+You can access a [hosted version of the test form here](https://captcha-demo.tlsft.com/).  That's running an unmodified version of the code [here](test-page/index.html).  If you want to run it yourself:
 
-1. Install docker.
-2. Open a terminal in this project directory and run:
 ```bash
-./scripts/build
-./scripts/deploy
+git clone git@github.com:TorchlightSoftware/n8n-nodes-recaptcha.git
+npm i -g node-static
+cd n8n-nodes-recaptcha/test-page
+static .
 ```
-3. Visit localhost:???? in your browser.
+Then visit http://127.0.0.1:8080 in your browser.
