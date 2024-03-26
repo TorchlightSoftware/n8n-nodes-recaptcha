@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ReCaptcha Test Form</title>
+    <!-- <script src="https://www.google.com/recaptcha/api.js"></script> -->
+  </head>
+  <body>
+    <div class="container">
+      <h1>
+        ReCaptcha Test Form
+      </h1>
+
+      <h3>
+        Setup
+      </h3>
+      <form name="params">
+        <input type="text" id="sitekey"
+          value=""
+          placeholder="Google ReCaptcha Site Key">
+        <input type="text" id="webhook"
+          value=""
+          placeholder="URL for your n8n webhook">
+      </form>
+
+      <h3>
+        Join Our Email List!
+      </h3>
+      <form name="email-list">
+        <fieldset role="group">
+          <input type="text" name="email" value="" placeholder="A test email">
+          <button id = 'form-submit'
+                  class="g-recaptcha" 
+                  data-sitekey="" 
+                  data-callback='onSubmit' 
+                  data-action='button'>Submit</button>
+        </fieldset>
+      </form>
+      <article id="token">ReCaptcha Token will show here once you submit the form...</article>
+    </div>
+    <script>
+      document.getElementById('sitekey').addEventListener('change', updateSiteKey, false)
+
+      function updateSiteKey() {
+        const sitekey = document.getElementById('sitekey').value
+
+        // if the sitekey is valid
+        if (/^[0-9a-zA-Z_-]{40}$/.test(sitekey)) {
+          console.log('valid sitekey, initializing recaptcha')
+
+          // set the sitekey on the submit button
+          const submit = document.getElementById('form-submit')
+          submit.setAttribute('data-sitekey', sitekey)
+
+          // remove the script if it already exists
+          document.getElementById('grecaptcha-load')?.remove()
+
+          // and load the GRecaptcha script
+          const s = document.createElement('script')
+          s.setAttribute('src', 'https://www.google.com/recaptcha/api.js')
+          s.setAttribute('id', 'grecaptcha-load')
+          document.head.append(s)
+        } else {
+          console.log('invalid sitekey, not initializing')
+        }
+      }
+      async function onSubmit(token) {
+        // show the token we just got
+        console.log('got token:', token)
+        const sitekey = document.getElementById('token').innerText = token
+
+        const email = document.getElementsByName('email')[0].value
+        const webhook = document.getElementById('webhook').value
+
+        // build the form
+        const form = new FormData()
+        form.append("email", email)
+        form.append("g-recaptcha-response", token)
+
+        // send the request
+        console.log('sending request')
+        const response = await fetch(webhook, {
+          mode: "no-cors",
+          method: "POST",
+          headers: {
+            "Accept": "application/json"
+          },
+          body: form
+        })
+        const results = await response.text()
+        // there won't be any results since n8n doesn't send anything back
+        // 200 OK means it succeeded
+      }
+    </script>
+  </body>
+  <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css"
+  />
+  <style>
+    .container {
+      margin: 14px;
+      max-width: 50%;
+      min-width: 500px;
+    }
+
+    form input {
+      margin-bottom: 6px;
+    }
+
+    form {
+      margin-bottom: 14px;
+    }
+  </style>
+</html>
